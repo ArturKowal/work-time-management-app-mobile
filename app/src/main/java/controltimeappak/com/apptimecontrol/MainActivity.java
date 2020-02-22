@@ -36,13 +36,9 @@ public class MainActivity extends AppCompatActivity {
     private RequestQueue mQueue;
     private RequestQueue requestQueue;
 
-
-
     EditText passwd;
     Switch what;
     static boolean ac=true;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,19 +110,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-
-        // Adding request to request queue
         Volley.newRequestQueue(this).add(jsonObjReq);
 
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
     private void jsonParse_get() {
         passwd = (EditText) findViewById(R.id.passwd);
+
         final String pass = passwd.getText().toString();
+        passwd.setText("");
         String url = "http://controltimeappak.pythonanywhere.com/api/" + pass;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {

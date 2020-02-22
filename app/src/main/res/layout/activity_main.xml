@@ -5,43 +5,67 @@ xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:padding="16dp"
-tools:context="controltimeappak.com.apptimecontrol.MainActivity">
+tools:context="controltimeappak.com.apptimecontrol.MainActivity"
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="189dp"
+            app:srcCompat="@drawable/time" />
+
         <TextView
             android:id="@+id/text_view_result"
             android:layout_width="match_parent"
-            android:layout_height="218dp"
+            android:layout_height="72dp"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:visibility="visible"
             tools:visibility="visible" />
 
-        <EditText
-            android:id="@+id/passwd"
-            android:layout_width="395dp"
-            android:layout_height="246dp"
-            android:ems="10"
-            android:inputType="numberPassword" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/passwd"
+                android:layout_width="395dp"
+                android:layout_height="70dp"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberPassword" />
+        </LinearLayout>
 
         <Switch
             android:id="@+id/what"
-            android:layout_width="200dp"
+            android:layout_width="323dp"
             android:layout_height="wrap_content"
-            android:text="Wchodzę --- Wychodzę"
             android:checked="false"
-            />
+            android:gravity="center"
+            android:text="Wchodzę --- Wychodzę" />
 
         <Button
             android:id="@+id/myButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@android:color/holo_green_light"
+            android:shadowColor="@android:color/holo_orange_dark"
+            android:textColorHint="@android:color/holo_red_dark"
+            android:textColorLink="@android:color/transparent"
+            android:textColorHighlight="@android:color/holo_green_light"
             android:layout_marginBottom="29dp"
-            android:text="Zaloguj" />
+            android:fontFamily=""
+            android:textSize="20dp"
+
+            android:text="Dodaj akcje" />
     </LinearLayout>
 
 </RelativeLayout>
