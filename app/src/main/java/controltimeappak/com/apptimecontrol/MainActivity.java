@@ -3,30 +3,23 @@ package controltimeappak.com.apptimecontrol;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,10 +27,9 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private TextView mTextViewResult;
     private RequestQueue mQueue;
-    private RequestQueue requestQueue;
 
     EditText passwd;
-    Switch what;
+    EditText id_in;
     static boolean ac=true;
 
     @Override
@@ -58,41 +50,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void jsonParse_post(int id) {
-
-        what = (Switch)findViewById(R.id.what);
-        what.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    ac = false;
-                } else {
-                    ac = true;
-                }}});
-
-
+    private void jsonParse_post(int id, final boolean action) {
 
         String url = "http://controltimeappak.pythonanywhere.com/api/post/create";
         JSONObject js = new JSONObject();
         try {
             js.put("who",id);
-            js.put("what",ac);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Make request for JSONObject
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(
                 Request.Method.POST, url, js,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (ac==true) {
-                            mTextViewResult.append("Zalogowano ! ;)");// + response.toString() +"\n\n");
-                        }else {
-                            mTextViewResult.append("Wylogowano ! ;)");// + response.toString() +"\n\n");
+                        if (action==false){
+                            mTextViewResult.append("Zalogowano! ;)");
+                        }
+                        else {
+                            mTextViewResult.append("Wylogowano! ;)");
                         }
 
                     }
@@ -101,24 +78,25 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-        }) {
+        })
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
-
         };
         Volley.newRequestQueue(this).add(jsonObjReq);
 
-}
+    }
 
     private void jsonParse_get() {
+        id_in = (EditText) findViewById(R.id.id_in);
         passwd = (EditText) findViewById(R.id.passwd);
 
-        final String pass = passwd.getText().toString();
-        passwd.setText("");
+        final String pass = id_in.getText().toString();
+        id_in.setText("");
         String url = "http://controltimeappak.pythonanywhere.com/api/" + pass;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -129,13 +107,22 @@ public class MainActivity extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject employee = jsonArray.getJSONObject(i);
 
-                                //int initt = employee.getInt("ident");
+                                int ident_2 = employee.getInt("ident");
                                 String firstName = employee.getString("first_name");
                                 String lastName = employee.getString("last_name");
                                 int id = employee.getInt("id");
+                                Boolean action = employee.getBoolean("what");
+                                mTextViewResult.append("Hello, " + firstName + " " + lastName + " nice to see you !" +"\n\n");
+                                String text = passwd.getText().toString();
+                                int ident = Integer.parseInt(text);
 
-                                mTextViewResult.append("Hello, " + firstName + " " + lastName + " nice to see you !" + "\n\n");
-                                jsonParse_post(id);
+                                if (ident==ident_2) {
+                                    jsonParse_post(id,action);
+                                }
+                                else {
+                                    mTextViewResult.append("Wrong PIN, try again." + "\n\n");
+                                }
+                                passwd.setText("");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -144,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mTextViewResult.append("Błędny login ! Spróbuj jeszcze raz." + "\n\n");
+                mTextViewResult.append("Wrong id ! Try again." + "\n\n");
                 error.printStackTrace();
             }
         });
@@ -159,4 +146,3 @@ public class MainActivity extends AppCompatActivity {
 
     }
 }
-

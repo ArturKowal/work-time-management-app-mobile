@@ -16,13 +16,13 @@ tools:context="controltimeappak.com.apptimecontrol.MainActivity"
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="189dp"
+            android:layout_height="186dp"
             app:srcCompat="@drawable/time" />
 
         <TextView
             android:id="@+id/text_view_result"
             android:layout_width="match_parent"
-            android:layout_height="72dp"
+            android:layout_height="82dp"
             android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="20sp"
@@ -31,25 +31,28 @@ tools:context="controltimeappak.com.apptimecontrol.MainActivity"
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="66dp"
+            android:layout_height="57dp"
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/passwd"
-                android:layout_width="395dp"
-                android:layout_height="70dp"
+                android:id="@+id/id_in"
+                android:layout_width="190dp"
+                android:layout_height="57dp"
                 android:ems="10"
                 android:gravity="center"
+                android:hint="Your Id"
                 android:inputType="numberPassword" />
-        </LinearLayout>
 
-        <Switch
-            android:id="@+id/what"
-            android:layout_width="323dp"
-            android:layout_height="wrap_content"
-            android:checked="false"
-            android:gravity="center"
-            android:text="Wchodzę --- Wychodzę" />
+            <EditText
+                android:id="@+id/passwd"
+                android:layout_width="190dp"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Your Pin"
+                android:inputType="numberPassword" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/myButton"
@@ -66,6 +69,7 @@ tools:context="controltimeappak.com.apptimecontrol.MainActivity"
             android:textSize="20dp"
 
             android:text="Dodaj akcje" />
+
     </LinearLayout>
 
 </RelativeLayout>
